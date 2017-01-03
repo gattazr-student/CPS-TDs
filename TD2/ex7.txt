@@ -1,0 +1,15 @@
+1) Il s'agit d'une division par 0. Le programme ne va donc pas terminer.
+
+La ligne "On va diviser par y..." ne s'affichera pas malgré le fait que cet affichage est appelé avant le calcul qui va causer l'erreur. C'est du au fait que stdout est "line-buffered". Cela signifie que les caaractères à afficher sont stockés dans un buffer (un tableau de caractères) avant leurs affichages et que ces caractères ne sont effectués que lorsque le buffer contient un \n. Il est également possible de forcer l'affichage avec la fonction fflush. Aussi, les affichages sont effectués lorsque le programme se termine par avec la fonction exit.
+
+2) L'exécution de ce programme a retourner l'erreur suivante :
+Floating point exception: 8
+
+Comme prévu, "On va diviser par y... " ne s'est pas affiché.
+
+3)
+En utilisant stderr plutôt que stderr, on aurait pu détecter l'emplacement de l'erreur plus facilement car stderr est "unbuffered". Les affichages dans stderr sont toujours effectués immédiatement.
+Pour l'utiliser :
+fprintf(stderr, "On va diviser par y...");
+
+En revanche, il n'est pas correct d'utiliser stderr pour afficher un message qui provient du fonctionnement normale du programme. Il serait plus juste de rajouter un \n à la fin du printf existant ou de forcer l'affichage avec fflush(stdout);

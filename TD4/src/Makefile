@@ -1,0 +1,49 @@
+#-------------------------------------------------
+#                    VARIABLES
+#-------------------------------------------------
+CC=gcc
+FLAGS=-g -Wall -pedantic -I../include/
+CFLAGS=$(FLAGS) -fPIC
+MAINFLAGS=$(FLAGS) -DNMAX=200
+
+LDFLAGS=-shared
+LINCLUDES=-L../lib
+LIBS=-lcrible
+
+
+LIB=../lib/libcrible.so
+SRCS_LIB=crible.c utils.c
+OBJS_LIB=${SRCS_LIB:.c=.o}
+
+EXEC=main
+SRCS_EXEC=main.c
+OBJS_EXEC=${SRCS_EXEC:.c=.o}
+
+
+#-------------------------------------------------
+#                     LINKINGS
+#-------------------------------------------------
+all: $(LIB) $(EXEC)
+
+$(EXEC): $(OBJS_EXEC)
+	$(CC) $(FLAGS) -o $(EXEC) $(OBJS_EXEC) $(LINCLUDES) $(LIBS)
+
+$(LIB): $(OBJS_LIB)
+	$(CC) $(FLAGS) -o $(LIB) $(OBJS_LIB) $(LDFLAGS)
+
+#-------------------------------------------------
+#                   DEPENDENCIES
+#-------------------------------------------------
+main.o: main.c ../lib/libcrible.so
+	$(CC) $(MAINFLAGS) -c -o $@ $<
+crible.o: crible.c ../include/crible.h ../include/utils.h
+utils.o: utils.c ../include/utils.h
+
+#-------------------------------------------------
+#                     CLEANING
+#-------------------------------------------------
+clean:
+	rm -f $(OBJS_LIB) $(OBJS_EXEC)
+
+mrproper: clean
+	rm -f $(LIB) $(EXEC)

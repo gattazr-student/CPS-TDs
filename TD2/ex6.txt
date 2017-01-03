@@ -1,0 +1,26 @@
+Avec x = 26 et y = 3.
+
+1) z = ++x / y;
+
+Ici, x est incrémenté avant l'instruction z = x/y. L'instruction est donc équivalente à
+x = x + 1;
+z = x / y;
+
+Les calculs effectués sont donc
+x = 26 + 1 = 27
+z = 27 / 3 = 9
+
+On a donc x=27, et z = 9.
+
+
+2) z = x++ / y;
+
+Ici, x est incrémenté après l'instruction z = x / y. L'instruction est donc équivalente à = 27.
+z = x / y;
+x = x + 1;
+
+Les calculs effectués sont donc
+z = 26 / 3 = 8 // il s'agit d'une division entière
+x = 26 + 1 = 27
+
+On a donc x=27, et z = 8.
